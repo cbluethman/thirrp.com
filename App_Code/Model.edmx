@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="parastr_thirrpModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="parastr_thirrpModelStoreContainer">
+          <EntitySet Name="Questions" EntityType="parastr_thirrpModel.Store.Questions" store:Type="Tables" Schema="parastr_dba01" />
+          <EntitySet Name="Users" EntityType="parastr_thirrpModel.Store.Users" store:Type="Tables" Schema="parastr_dba01" />
+          <AssociationSet Name="FK_Questions_AnswerUserId" Association="parastr_thirrpModel.Store.FK_Questions_AnswerUserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_AskUserId" Association="parastr_thirrpModel.Store.FK_Questions_AskUserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Locale" Type="nvarchar" MaxLength="10" />
+          <Property Name="Question" Type="nvarchar" />
+          <Property Name="Answer" Type="nvarchar" />
+          <Property Name="AskUserId" Type="int" />
+          <Property Name="AskDateTime" Type="datetime" />
+          <Property Name="AnswerUserId" Type="int" />
+          <Property Name="AnswerDateTime" Type="datetime" />
+          <Property Name="Archived" Type="bit" />
+          <Property Name="ViewedAnswer" Type="bit" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceID" Type="char" Nullable="false" MaxLength="40" />
+          <Property Name="DeviceToken" Type="char" MaxLength="64" />
+          <Property Name="BadgeCount" Type="int" />
+        </EntityType>
+        <Association Name="FK_Questions_AnswerUserId">
+          <End Role="Users" Type="parastr_thirrpModel.Store.Users" Multiplicity="0..1" />
+          <End Role="Questions" Type="parastr_thirrpModel.Store.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="AnswerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_AskUserId">
+          <End Role="Users" Type="parastr_thirrpModel.Store.Users" Multiplicity="0..1" />
+          <End Role="Questions" Type="parastr_thirrpModel.Store.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="AskUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_AnswerQuestion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="intQuestionId" Type="int" Mode="In" />
+          <Parameter Name="varAnswer" Type="varchar" Mode="In" />
+          <Parameter Name="intUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_ArchiveQuestion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="intQuestionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_DidViewAnswer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="intQuestionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetBadgeCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="intUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetPushToken" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="intUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetQuestion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="intQuestionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetQuestionsByUserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="intUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetQuestionToAnswer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="varLocale" Type="varchar" Mode="In" />
+          <Parameter Name="intUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="cDeviceID" Type="char" Mode="In" />
+        </Function>
+        <Function Name="usp_InsertQuestion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="varLocale" Type="varchar" Mode="In" />
+          <Parameter Name="varQuestion" Type="varchar" Mode="In" />
+          <Parameter Name="intUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_SavePushToken" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="intUserId" Type="int" Mode="In" />
+          <Parameter Name="cDeviceToken" Type="char" Mode="In" />
+        </Function>
+        <Function Name="usp_SetBadgeCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="parastr_dba01">
+          <Parameter Name="intUserId" Type="int" Mode="In" />
+          <Parameter Name="intBadgeCount" Type="int" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="parastr_thirrpModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Questions" EntityType="parastr_thirrpModel.Questions" />
+          <EntitySet Name="Users" EntityType="parastr_thirrpModel.Users" />
+          <AssociationSet Name="FK_Questions_AnswerUserId" Association="parastr_thirrpModel.FK_Questions_AnswerUserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_AskUserId" Association="parastr_thirrpModel.FK_Questions_AskUserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <FunctionImport Name="AnswerQuestion" EntitySet="Questions" ReturnType="Collection(parastr_thirrpModel.Questions)">
+            <Parameter Name="intQuestionId" Mode="In" Type="Int32" />
+            <Parameter Name="varAnswer" Mode="In" Type="String" />
+            <Parameter Name="intUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetQuestionToAnswer" EntitySet="Questions" ReturnType="Collection(parastr_thirrpModel.Questions)">
+            <Parameter Name="varLocale" Mode="In" Type="String" />
+            <Parameter Name="intUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUser" EntitySet="Users" ReturnType="Collection(parastr_thirrpModel.Users)">
+          <Parameter Name="cDeviceID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertQuestion" EntitySet="Questions" ReturnType="Collection(parastr_thirrpModel.Questions)">
+            <Parameter Name="varLocale" Mode="In" Type="String" />
+            <Parameter Name="varQuestion" Mode="In" Type="String" />
+            <Parameter Name="intUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SavePushToken">
+            <Parameter Name="intUserId" Mode="In" Type="Int32" />
+            <Parameter Name="cDeviceToken" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetQuestionsByUserId" EntitySet="Questions" ReturnType="Collection(parastr_thirrpModel.Questions)">
+          <Parameter Name="intUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ArchiveQuestion">
+          <Parameter Name="intQuestionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBadgeCount" ReturnType="Collection(Int32)">
+          <Parameter Name="intUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SetBadgeCount">
+            <Parameter Name="intUserId" Mode="In" Type="Int32" />
+            <Parameter Name="intBadgeCount" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetPushToken" ReturnType="Collection(String)">
+          <Parameter Name="intUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetQuestion" EntitySet="Questions" ReturnType="Collection(parastr_thirrpModel.Questions)">
+          <Parameter Name="intQuestionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DidViewAnswer">
+            <Parameter Name="intQuestionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Locale" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="Question" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Answer" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="AskUserId" Type="Int32" />
+          <Property Name="AskDateTime" Type="DateTime" />
+          <Property Name="AnswerUserId" Type="Int32" />
+          <Property Name="AnswerDateTime" Type="DateTime" />
+          <NavigationProperty Name="Users" Relationship="parastr_thirrpModel.FK_Questions_AnswerUserId" FromRole="Questions" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="parastr_thirrpModel.FK_Questions_AskUserId" FromRole="Questions" ToRole="Users" />
+          <Property Type="Boolean" Name="Archived" />
+          <Property Type="Boolean" Name="ViewedAnswer" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceID" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="true" />
+          <Property Name="DeviceToken" Type="String" MaxLength="64" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Questions" Relationship="parastr_thirrpModel.FK_Questions_AnswerUserId" FromRole="Users" ToRole="Questions" />
+          <NavigationProperty Name="Questions1" Relationship="parastr_thirrpModel.FK_Questions_AskUserId" FromRole="Users" ToRole="Questions" />
+          <Property Type="Int32" Name="BadgeCount" />
+        </EntityType>
+        <Association Name="FK_Questions_AnswerUserId">
+          <End Role="Users" Type="parastr_thirrpModel.Users" Multiplicity="0..1" />
+          <End Role="Questions" Type="parastr_thirrpModel.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="AnswerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_AskUserId">
+          <End Role="Users" Type="parastr_thirrpModel.Users" Multiplicity="0..1" />
+          <End Role="Questions" Type="parastr_thirrpModel.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="AskUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="parastr_thirrpModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Questions"><EntityTypeMapping TypeName="parastr_thirrpModel.Questions"><MappingFragment StoreEntitySet="Questions">
+            <ScalarProperty Name="ViewedAnswer" ColumnName="ViewedAnswer" />
+                <ScalarProperty Name="Archived" ColumnName="Archived" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+            <ScalarProperty Name="Locale" ColumnName="Locale" />
+            <ScalarProperty Name="Question" ColumnName="Question" />
+            <ScalarProperty Name="Answer" ColumnName="Answer" />
+            <ScalarProperty Name="AskUserId" ColumnName="AskUserId" />
+            <ScalarProperty Name="AskDateTime" ColumnName="AskDateTime" />
+            <ScalarProperty Name="AnswerUserId" ColumnName="AnswerUserId" />
+            <ScalarProperty Name="AnswerDateTime" ColumnName="AnswerDateTime" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="parastr_thirrpModel.Users"><MappingFragment StoreEntitySet="Users">
+            <ScalarProperty Name="BadgeCount" ColumnName="BadgeCount" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+            <ScalarProperty Name="DeviceToken" ColumnName="DeviceToken" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AnswerQuestion" FunctionName="parastr_thirrpModel.Store.usp_AnswerQuestion" />
+          <FunctionImportMapping FunctionImportName="GetQuestionToAnswer" FunctionName="parastr_thirrpModel.Store.usp_GetQuestionToAnswer" />
+          <FunctionImportMapping FunctionImportName="GetUser" FunctionName="parastr_thirrpModel.Store.usp_GetUser" />
+          <FunctionImportMapping FunctionImportName="InsertQuestion" FunctionName="parastr_thirrpModel.Store.usp_InsertQuestion" />
+          <FunctionImportMapping FunctionImportName="SavePushToken" FunctionName="parastr_thirrpModel.Store.usp_SavePushToken" />
+          <FunctionImportMapping FunctionImportName="GetQuestionsByUserId" FunctionName="parastr_thirrpModel.Store.usp_GetQuestionsByUserId" />
+          <FunctionImportMapping FunctionImportName="ArchiveQuestion" FunctionName="parastr_thirrpModel.Store.usp_ArchiveQuestion" />
+          <FunctionImportMapping FunctionImportName="GetBadgeCount" FunctionName="parastr_thirrpModel.Store.usp_GetBadgeCount" />
+          <FunctionImportMapping FunctionImportName="SetBadgeCount" FunctionName="parastr_thirrpModel.Store.usp_SetBadgeCount" />
+          <FunctionImportMapping FunctionImportName="GetPushToken" FunctionName="parastr_thirrpModel.Store.usp_GetPushToken" />
+          <FunctionImportMapping FunctionImportName="GetQuestion" FunctionName="parastr_thirrpModel.Store.usp_GetQuestion" />
+          <FunctionImportMapping FunctionImportName="DidViewAnswer" FunctionName="parastr_thirrpModel.Store.usp_DidViewAnswer" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model">
+        <EntityTypeShape EntityType="parastr_thirrpModel.Questions" Width="1.5" PointX="3" PointY="1" Height="2.9417936197916656" IsExpanded="true" />
+        <EntityTypeShape EntityType="parastr_thirrpModel.Users" Width="1.5" PointX="0.75" PointY="1.5" Height="1.9802864583333335" IsExpanded="true" />
+        <AssociationConnector Association="parastr_thirrpModel.FK_Questions_AnswerUserId" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.4901432291666667" />
+          <ConnectorPoint PointX="3" PointY="2.4901432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="parastr_thirrpModel.FK_Questions_AskUserId" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="1.9325716145833334" />
+          <ConnectorPoint PointX="3" PointY="1.9325716145833334" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,9 @@
+<asp:GridView AutoGenerateColumns="False" runat="server" BackColor="White" BorderColor="White"
+    BorderStyle="Ridge" HeaderStyle-HorizontalAlign="Center" BorderWidth="2px" CellPadding="3"
+    CellSpacing="1" GridLines="None">
+    <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
+    <RowStyle BackColor="#DEDFDE" ForeColor="Black" />
+    <SelectedRowStyle BackColor="#9471DE" Font-Bold="True" ForeColor="White" />
+    <PagerStyle BackColor="#C6C3C6" ForeColor="Black" HorizontalAlign="Right" />
+    <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#E7E7FF" />
+</asp:GridView>

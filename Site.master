@@ -1,0 +1,134 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" %>
+<%@ Register Assembly="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+    Namespace="System.Web.UI" TagPrefix="asp" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>thirrp.com</title>
+    <meta name="DESCRIPTION" content="thirrp.com lets you ask questions and get answers in an unique way." />
+    <meta name="KEYWORDS" content="thirrp.com, questions, answers, fun, bluethman, ios, app store, question, answer, ask a question" />
+    <meta name="COPYRIGHT" content="Copyright thirrp.com" />
+    <meta name="AUTHOR" content="thirrp.com" />
+    <meta name="RESOURCE-TYPE" content="DOCUMENT" />
+    <meta name="DISTRIBUTION" content="GLOBAL" />
+    <meta name="ROBOTS" content="INDEX, FOLLOW" />
+    <meta name="REVISIT-AFTER" content="1 DAYS" />
+    <meta name="RATING" content="GENERAL" />
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript">
+    var pageTracker = _gat._getTracker("UA-3336668-1");
+    pageTracker._initData();
+    pageTracker._trackPageview();
+</script>
+
+<body bgcolor="white" id="bodyMaster" runat="server">
+    <form id="frmMain" runat="server">
+    <div id="popup">
+    </div>
+
+    <script type="text/javascript" src="Scripts/thirrp.js"></script>
+
+    <div id="divMain" class="text">
+        <div id="divContent">
+            <table width="100%" bgcolor="#00ccff" rules="none" cellpadding="0" cellspacing="0"
+                border="10px" style="border-left-color: #00ccff; border-bottom-color: #00ccff;
+                border-top-style: solid; border-top-color: #00ccff; border-right-style: solid;
+                border-left-style: solid; border-right-color: #00ccff; border-bottom-style: solid">
+                <tr height="40px">
+                    <td>
+                        <img id="Img1" src="~/graphics/thirrp512.png"  height="128" width="128" runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <a id="A1" href="~/Default.aspx" runat="server">
+                            <img id="Img2" src="~/graphics/thirrp.jpg" runat="server" />
+                        </a>
+                    </td>
+                    <td valign="middle">
+                        <asp:Menu ID="menMain" runat="server" Orientation="Horizontal" BackColor="#0000C0"
+                            DynamicHorizontalOffset="2" Font-Names="Arial" Font-Size="1.0em" ForeColor="White"
+                            StaticSubMenuIndent="10px">
+                            <Items>
+                                <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" Value="Home"></asp:MenuItem>
+                            </Items>
+                            <StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+                            <DynamicHoverStyle BackColor="#284E98" ForeColor="White" />
+                            <DynamicMenuStyle BackColor="#B5C7DE" />
+                            <StaticSelectedStyle BackColor="#507CD1" />
+                            <DynamicSelectedStyle BackColor="#507CD1" />
+                            <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+                            <StaticHoverStyle BackColor="#284E98" ForeColor="White" />
+                        </asp:Menu>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" cellpadding="10px">
+                <tr>
+                    <td colspan="3">
+                        <div class="link">
+                            <asp:ContentPlaceHolder ID="cphMain" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="divFooter">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <asp:MultiView ID="mvAds" runat="server">
+                            <asp:View ID="vOne" runat="server">
+                                <a href="http://ww6.aitsafe.com/go.htm?go=www.sidewinder.ca%2Fbuynow.html&afid=17858&tm=5&im=3"
+                                    target="_top">
+                                    <img src="http://sidewinder.ca/sidewinder_files/SWINDER2.GIF" width="468" height="89"
+                                        border="0" alt="Sidewinder Emergency Cell Phone Charger"></a>
+                            </asp:View>
+                            <asp:View ID="vTwo" runat="server">
+
+                                <script type="text/javascript"><!--
+                                    google_ad_client = "pub-4758046480177585";
+                                    //masterOther - 728x90, created 12/5/07
+                                    google_ad_slot = "2442328474";
+                                    google_ad_width = 728;
+                                    google_ad_height = 90;
+//--></script>
+
+                                <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                </script>
+
+                            </asp:View>
+                        </asp:MultiView>
+                    </td>
+                </tr>
+            </table>
+            <table align="center" width="728px">
+                <tr>
+                    <td align="left">
+                        Copyright ©
+                        <%= DateTime.Now.Year %>
+                        thirrp.com
+                    </td>
+                    <td align="right">
+                        <div class="link">
+                            <a id="A2" href="~/BottomLinks/AboutUs.aspx" runat="server">about us</a>&nbsp;|&nbsp;<a id="A3" href="~/BottomLinks/ContactUs.aspx"
+                                runat="server">contact us</a>&nbsp;|&nbsp;<a id="A4" href="~/BottomLinks/TermsOfService.aspx"
+                                    runat="server">terms of service</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <asp:Literal ID="lcKeepAlive" runat="server"></asp:Literal>
+    </form>
+</body>
+</html>
